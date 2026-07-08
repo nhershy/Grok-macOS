@@ -44,7 +44,6 @@ final class WebViewModel: NSObject, ObservableObject {
 
     @Published var canGoBack = false
     @Published var canGoForward = false
-    @Published var pageTitle = "Grok"
     @Published var zoomPercent = 100
     @Published var sidebarCSSWidth: Double = 248
 
@@ -157,12 +156,6 @@ final class WebViewModel: NSObject, ObservableObject {
             },
             webView.observe(\.canGoForward, options: [.initial, .new]) { [weak self] view, _ in
                 MainActor.assumeIsolated { self?.canGoForward = view.canGoForward }
-            },
-            webView.observe(\.title, options: [.initial, .new]) { [weak self] view, _ in
-                MainActor.assumeIsolated {
-                    let title = view.title ?? ""
-                    self?.pageTitle = title.isEmpty ? "Grok" : title
-                }
             },
         ]
 

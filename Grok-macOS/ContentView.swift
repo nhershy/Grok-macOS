@@ -27,6 +27,6 @@ struct ContentView: View {
                     .padding(.bottom, 16)
                     .animation(.easeOut(duration: 0.2), value: zoomControlsLeadingInset)
             }
-            .navigationTitle(model.pageTitle)
+            .navigationTitle("Grok")
     }
 }
