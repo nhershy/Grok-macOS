@@ -58,12 +58,31 @@ final class WebViewModel: NSObject, ObservableObject {
     // left edge): reports its CSS-pixel width so native overlays can track
     // collapse/expand, and forces it dark (black background, white text)
     // when the page renders a light theme. Media elements are re-inverted
-    // so avatars keep their true colors.
+    // so avatars keep their true colors. Also tags the "New Chat" item so
+    // it can be styled as the sidebar's primary action.
     private static let sidebarWatcherScript = """
     (function () {
         const STYLE_ID = 'native-sidebar-style';
         const CSS = 'html.native-sidebar-invert [data-native-sidebar] { filter: invert(1) hue-rotate(180deg); }'
-            + ' html.native-sidebar-invert [data-native-sidebar] :is(img, video, canvas) { filter: invert(1) hue-rotate(180deg); }';
+            + ' html.native-sidebar-invert [data-native-sidebar] :is(img, video, canvas) { filter: invert(1) hue-rotate(180deg); }'
+            + ' [data-native-newchat] {'
+            + '   border-radius: 10px !important;'
+            + '   font-weight: 500 !important;'
+            + '   transition: background 0.15s ease, box-shadow 0.15s ease; }'
+            // Two variants because the sidebar-invert filter flips colors:
+            // when inverted (site in light mode), black paint displays white.
+            + ' html:not(.native-sidebar-invert) [data-native-newchat] {'
+            + '   background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06)) !important;'
+            + '   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35), 0 1px 6px rgba(0,0,0,0.35) !important; }'
+            + ' html:not(.native-sidebar-invert) [data-native-newchat]:hover {'
+            + '   background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0.10)) !important;'
+            + '   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5), 0 1px 8px rgba(0,0,0,0.4) !important; }'
+            + ' html.native-sidebar-invert [data-native-newchat] {'
+            + '   background: linear-gradient(180deg, rgba(0,0,0,0.16), rgba(0,0,0,0.06)) !important;'
+            + '   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.35), 0 1px 6px rgba(255,255,255,0.2) !important; }'
+            + ' html.native-sidebar-invert [data-native-newchat]:hover {'
+            + '   background: linear-gradient(180deg, rgba(0,0,0,0.22), rgba(0,0,0,0.10)) !important;'
+            + '   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.5), 0 1px 8px rgba(255,255,255,0.25) !important; }';
 
         function ensureStyle() {
             if (!document.getElementById(STYLE_ID)) {
@@ -89,6 +108,21 @@ final class WebViewModel: NSObject, ObservableObject {
             return found;
         }
 
+        // Grok's SPA rerenders the sidebar, dropping our attribute, so the
+        // interval loop re-tags. Matched by visible text / aria-label since
+        // the site's class names are hashed and unstable.
+        function tagNewChat(sidebar) {
+            if (sidebar.querySelector('[data-native-newchat]')) { return; }
+            for (const el of sidebar.querySelectorAll('a, button')) {
+                const text = (el.textContent || '').replace(/\\s+/g, ' ').trim().toLowerCase();
+                const label = (el.getAttribute('aria-label') || '').trim().toLowerCase();
+                if (text === 'new chat' || label === 'new chat') {
+                    el.setAttribute('data-native-newchat', '');
+                    return;
+                }
+            }
+        }
+
         function bgLuminance(el) {
             const parts = getComputedStyle(el).backgroundColor.match(/[\\d.]+/g);
             if (!parts || parts.length < 3) { return null; }
@@ -103,6 +137,7 @@ final class WebViewModel: NSObject, ObservableObject {
                 const sidebar = findSidebar();
                 if (!sidebar) { return; }
                 sidebar.setAttribute('data-native-sidebar', '');
+                tagNewChat(sidebar);
                 const w = Math.round(sidebar.getBoundingClientRect().width);
                 if (w > 0 && w !== last) {
                     last = w;
