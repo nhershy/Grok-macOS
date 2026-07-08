@@ -45,12 +45,47 @@ final class WebViewModel: NSObject, ObservableObject {
     @Published var canGoBack = false
     @Published var canGoForward = false
     @Published var pageTitle = "Grok"
+    @Published var zoomPercent = 100
+    @Published var sidebarCSSWidth: Double = 248
 
     let webView: WKWebView
 
     private var observations: [NSKeyValueObservation] = []
     private var popupWindows: [NSWindow] = []
     private var activeDownloads: [WKDownload: URL] = [:]
+    private let scriptMessageProxy = ScriptMessageProxy()
+
+    // Measures grok.com's sidebar (the full-height container hugging the
+    // left edge) and reports its CSS-pixel width whenever it changes, so
+    // native overlays can track collapse/expand.
+    private static let sidebarWatcherScript = """
+    (function () {
+        function sidebarWidth() {
+            const el = document.elementFromPoint(8, window.innerHeight / 2);
+            if (!el) { return 0; }
+            let node = el;
+            let width = 0;
+            while (node && node !== document.body) {
+                const r = node.getBoundingClientRect();
+                if (r.height >= window.innerHeight * 0.8 && r.width <= 500 && r.left <= 8) {
+                    width = r.width;
+                }
+                node = node.parentElement;
+            }
+            return width;
+        }
+        let last = -1;
+        setInterval(function () {
+            try {
+                const w = Math.round(sidebarWidth());
+                if (w > 0 && w !== last) {
+                    last = w;
+                    window.webkit.messageHandlers.sidebarWidth.postMessage(w);
+                }
+            } catch (e) {}
+        }, 400);
+    })();
+    """
 
     override init() {
         let configuration = WKWebViewConfiguration()
@@ -71,9 +106,19 @@ final class WebViewModel: NSObject, ObservableObject {
         webView.navigationDelegate = self
         webView.uiDelegate = self
 
+        scriptMessageProxy.model = self
+        let contentController = webView.configuration.userContentController
+        contentController.add(scriptMessageProxy, name: "sidebarWidth")
+        contentController.addUserScript(WKUserScript(
+            source: Self.sidebarWatcherScript,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: true
+        ))
+
         if UserDefaults.standard.object(forKey: Self.zoomDefaultsKey) != nil {
             let stored = UserDefaults.standard.double(forKey: Self.zoomDefaultsKey)
             webView.pageZoom = min(max(stored, 0.5), 3.0)
+            zoomPercent = Int((webView.pageZoom * 100).rounded())
         }
 
         observations = [
@@ -113,22 +158,30 @@ final class WebViewModel: NSObject, ObservableObject {
     }
 
     func zoomIn() {
-        webView.pageZoom = min(webView.pageZoom * 1.1, 3.0)
-        saveZoom()
+        setZoom(webView.pageZoom * 1.1)
     }
 
     func zoomOut() {
-        webView.pageZoom = max(webView.pageZoom / 1.1, 0.5)
-        saveZoom()
+        setZoom(webView.pageZoom / 1.1)
     }
 
     func zoomReset() {
-        webView.pageZoom = 1.0
-        saveZoom()
+        setZoom(1.0)
     }
 
-    private func saveZoom() {
+    private func setZoom(_ value: Double) {
+        webView.pageZoom = min(max(value, 0.5), 3.0)
+        zoomPercent = Int((webView.pageZoom * 100).rounded())
         UserDefaults.standard.set(webView.pageZoom, forKey: Self.zoomDefaultsKey)
+    }
+
+    // MARK: - Script messages
+
+    fileprivate func handleScriptMessage(_ message: WKScriptMessage) {
+        guard message.name == "sidebarWidth",
+              let width = message.body as? Double,
+              width > 0, width <= 500 else { return }
+        sidebarCSSWidth = width
     }
 
     // MARK: - Host policy
@@ -136,6 +189,16 @@ final class WebViewModel: NSObject, ObservableObject {
     private func isInAppURL(_ url: URL) -> Bool {
         guard let host = url.host()?.lowercased() else { return false }
         return Self.inAppHosts.contains { host == $0 || host.hasSuffix(".\($0)") }
+    }
+}
+
+// The user content controller retains its message handlers, and the model
+// retains the webview — this proxy breaks what would otherwise be a cycle.
+private final class ScriptMessageProxy: NSObject, WKScriptMessageHandler {
+    weak var model: WebViewModel?
+
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        model?.handleScriptMessage(message)
     }
 }
 
