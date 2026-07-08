@@ -40,6 +40,8 @@ final class WebViewModel: NSObject, ObservableObject {
     private static let safariUserAgent =
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15"
 
+    private static let zoomDefaultsKey = "pageZoom"
+
     @Published var canGoBack = false
     @Published var canGoForward = false
     @Published var pageTitle = "Grok"
@@ -68,6 +70,11 @@ final class WebViewModel: NSObject, ObservableObject {
 
         webView.navigationDelegate = self
         webView.uiDelegate = self
+
+        if UserDefaults.standard.object(forKey: Self.zoomDefaultsKey) != nil {
+            let stored = UserDefaults.standard.double(forKey: Self.zoomDefaultsKey)
+            webView.pageZoom = min(max(stored, 0.5), 3.0)
+        }
 
         observations = [
             webView.observe(\.canGoBack, options: [.initial, .new]) { [weak self] view, _ in
@@ -107,14 +114,21 @@ final class WebViewModel: NSObject, ObservableObject {
 
     func zoomIn() {
         webView.pageZoom = min(webView.pageZoom * 1.1, 3.0)
+        saveZoom()
     }
 
     func zoomOut() {
         webView.pageZoom = max(webView.pageZoom / 1.1, 0.5)
+        saveZoom()
     }
 
     func zoomReset() {
         webView.pageZoom = 1.0
+        saveZoom()
+    }
+
+    private func saveZoom() {
+        UserDefaults.standard.set(webView.pageZoom, forKey: Self.zoomDefaultsKey)
     }
 
     // MARK: - Host policy
