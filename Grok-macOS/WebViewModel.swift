@@ -55,33 +55,63 @@ final class WebViewModel: NSObject, ObservableObject {
     private var activeDownloads: [WKDownload: URL] = [:]
     private let scriptMessageProxy = ScriptMessageProxy()
 
-    // Measures grok.com's sidebar (the full-height container hugging the
-    // left edge) and reports its CSS-pixel width whenever it changes, so
-    // native overlays can track collapse/expand.
+    // Watches grok.com's sidebar (the full-height container hugging the
+    // left edge): reports its CSS-pixel width so native overlays can track
+    // collapse/expand, and forces it dark (black background, white text)
+    // when the page renders a light theme. Media elements are re-inverted
+    // so avatars keep their true colors.
     private static let sidebarWatcherScript = """
     (function () {
-        function sidebarWidth() {
-            const el = document.elementFromPoint(8, window.innerHeight / 2);
-            if (!el) { return 0; }
-            let node = el;
-            let width = 0;
+        const STYLE_ID = 'native-sidebar-style';
+        const CSS = 'html.native-sidebar-invert [data-native-sidebar] { filter: invert(1) hue-rotate(180deg); }'
+            + ' html.native-sidebar-invert [data-native-sidebar] :is(img, video, canvas) { filter: invert(1) hue-rotate(180deg); }';
+
+        function ensureStyle() {
+            if (!document.getElementById(STYLE_ID)) {
+                const style = document.createElement('style');
+                style.id = STYLE_ID;
+                style.textContent = CSS;
+                document.head.appendChild(style);
+            }
+        }
+
+        function findSidebar() {
+            const probe = document.elementFromPoint(8, window.innerHeight / 2);
+            if (!probe) { return null; }
+            let node = probe;
+            let found = null;
             while (node && node !== document.body) {
                 const r = node.getBoundingClientRect();
                 if (r.height >= window.innerHeight * 0.8 && r.width <= 500 && r.left <= 8) {
-                    width = r.width;
+                    found = node;
                 }
                 node = node.parentElement;
             }
-            return width;
+            return found;
         }
+
+        function bgLuminance(el) {
+            const parts = getComputedStyle(el).backgroundColor.match(/[\\d.]+/g);
+            if (!parts || parts.length < 3) { return null; }
+            if (parts.length === 4 && parseFloat(parts[3]) === 0) { return null; }
+            return 0.299 * parts[0] + 0.587 * parts[1] + 0.114 * parts[2];
+        }
+
         let last = -1;
         setInterval(function () {
             try {
-                const w = Math.round(sidebarWidth());
+                ensureStyle();
+                const sidebar = findSidebar();
+                if (!sidebar) { return; }
+                sidebar.setAttribute('data-native-sidebar', '');
+                const w = Math.round(sidebar.getBoundingClientRect().width);
                 if (w > 0 && w !== last) {
                     last = w;
                     window.webkit.messageHandlers.sidebarWidth.postMessage(w);
                 }
+                const lum = bgLuminance(document.body) ?? bgLuminance(document.documentElement);
+                const isLight = (lum === null) ? false : lum > 128;
+                document.documentElement.classList.toggle('native-sidebar-invert', isLight);
             } catch (e) {}
         }, 400);
     })();

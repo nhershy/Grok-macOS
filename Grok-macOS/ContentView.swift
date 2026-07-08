@@ -21,10 +21,10 @@ struct ContentView: View {
         WebView(model: model)
             .frame(minWidth: 800, minHeight: 600)
             .background(WindowGrabber())
-            .overlay(alignment: .topLeading) {
+            .overlay(alignment: .bottomLeading) {
                 ZoomControls(model: model)
                     .padding(.leading, zoomControlsLeadingInset)
-                    .padding(.top, 12)
+                    .padding(.bottom, 16)
                     .animation(.easeOut(duration: 0.2), value: zoomControlsLeadingInset)
             }
             .navigationTitle(model.pageTitle)
