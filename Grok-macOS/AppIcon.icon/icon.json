@@ -1,0 +1,22 @@
+{
+  "fill" : {
+    "solid" : "srgb:0.02,0.02,0.02,1.00"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "glass" : true,
+          "image-name" : "glyph.png",
+          "name" : "glyph"
+        }
+      ]
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

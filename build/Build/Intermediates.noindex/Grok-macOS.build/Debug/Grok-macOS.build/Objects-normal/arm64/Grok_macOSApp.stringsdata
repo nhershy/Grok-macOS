@@ -1,0 +1,16 @@
+{
+  "source": "/Users/nicholashershy/XcodeProjects/Grok-macOS/Grok-macOS/Grok_macOSApp.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Grok",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 17
+        }
+      }
+    ]
+  },
+  "version": 1
+}

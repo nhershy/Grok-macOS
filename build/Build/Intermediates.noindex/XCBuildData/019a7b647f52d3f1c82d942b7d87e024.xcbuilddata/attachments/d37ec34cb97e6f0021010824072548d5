@@ -1,0 +1,79 @@
+{
+  "" : {
+    "diagnostics" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok-macOS-primary.dia",
+    "emit-module-dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok-macOS-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok-macOS-primary-emit-module.dia",
+    "pch" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok-macOS-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok-macOS-primary.swiftdeps"
+  },
+  "/Users/nicholashershy/XcodeProjects/Grok-macOS/Grok-macOS/BrowserCommands.swift" : {
+    "const-values" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/BrowserCommands.swiftconstvalues",
+    "dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/BrowserCommands.d",
+    "diagnostics" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/BrowserCommands.dia",
+    "index-unit-output-path" : "/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/BrowserCommands.o",
+    "llvm-bc" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/BrowserCommands.bc",
+    "object" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/BrowserCommands.o",
+    "swift-dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/BrowserCommands.swiftdeps",
+    "swiftmodule" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/BrowserCommands~partial.swiftmodule"
+  },
+  "/Users/nicholashershy/XcodeProjects/Grok-macOS/Grok-macOS/ContentView.swift" : {
+    "const-values" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/nicholashershy/XcodeProjects/Grok-macOS/Grok-macOS/Grok_macOSApp.swift" : {
+    "const-values" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok_macOSApp.swiftconstvalues",
+    "dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok_macOSApp.d",
+    "diagnostics" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok_macOSApp.dia",
+    "index-unit-output-path" : "/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok_macOSApp.o",
+    "llvm-bc" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok_macOSApp.bc",
+    "object" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok_macOSApp.o",
+    "swift-dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok_macOSApp.swiftdeps",
+    "swiftmodule" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/Grok_macOSApp~partial.swiftmodule"
+  },
+  "/Users/nicholashershy/XcodeProjects/Grok-macOS/Grok-macOS/HotKey.swift" : {
+    "const-values" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/HotKey.swiftconstvalues",
+    "dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/HotKey.d",
+    "diagnostics" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/HotKey.dia",
+    "index-unit-output-path" : "/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/HotKey.o",
+    "llvm-bc" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/HotKey.bc",
+    "object" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/HotKey.o",
+    "swift-dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/HotKey.swiftdeps",
+    "swiftmodule" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/HotKey~partial.swiftmodule"
+  },
+  "/Users/nicholashershy/XcodeProjects/Grok-macOS/Grok-macOS/WebView.swift" : {
+    "const-values" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebView.swiftconstvalues",
+    "dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebView.d",
+    "diagnostics" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebView.dia",
+    "index-unit-output-path" : "/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebView.o",
+    "llvm-bc" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebView.bc",
+    "object" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebView.o",
+    "swift-dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebView.swiftdeps",
+    "swiftmodule" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebView~partial.swiftmodule"
+  },
+  "/Users/nicholashershy/XcodeProjects/Grok-macOS/Grok-macOS/WebViewModel.swift" : {
+    "const-values" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebViewModel.swiftconstvalues",
+    "dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebViewModel.d",
+    "diagnostics" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebViewModel.dia",
+    "index-unit-output-path" : "/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebViewModel.o",
+    "llvm-bc" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebViewModel.bc",
+    "object" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebViewModel.o",
+    "swift-dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebViewModel.swiftdeps",
+    "swiftmodule" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/WebViewModel~partial.swiftmodule"
+  },
+  "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/nicholashershy/XcodeProjects/Grok-macOS/build/Build/Intermediates.noindex/Grok-macOS.build/Debug/Grok-macOS.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  }
+}
