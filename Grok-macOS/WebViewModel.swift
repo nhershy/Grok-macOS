@@ -41,11 +41,19 @@ final class WebViewModel: NSObject, ObservableObject {
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15"
 
     private static let zoomDefaultsKey = "pageZoom"
+    private static let usagePillDefaultsKey = "usagePillVisible"
 
     @Published var canGoBack = false
     @Published var canGoForward = false
     @Published var zoomPercent = 100
     @Published var sidebarCSSWidth: Double = 248
+    @Published var usageByModel: [String: ModelRateLimit] = [:]
+    @Published var isUsagePillVisible = UserDefaults.standard.bool(forKey: WebViewModel.usagePillDefaultsKey) {
+        didSet {
+            UserDefaults.standard.set(isUsagePillVisible, forKey: Self.usagePillDefaultsKey)
+            pushUsageVisibility()
+        }
+    }
 
     let webView: WKWebView
 
@@ -178,6 +186,14 @@ final class WebViewModel: NSObject, ObservableObject {
             injectionTime: .atDocumentEnd,
             forMainFrameOnly: true
         ))
+        contentController.add(scriptMessageProxy, name: "usage")
+        // Document start so window.fetch is wrapped before page scripts
+        // capture a reference to it.
+        contentController.addUserScript(WKUserScript(
+            source: UsageMonitor.script,
+            injectionTime: .atDocumentStart,
+            forMainFrameOnly: true
+        ))
 
         if UserDefaults.standard.object(forKey: Self.zoomDefaultsKey) != nil {
             let stored = UserDefaults.standard.double(forKey: Self.zoomDefaultsKey)
@@ -236,10 +252,30 @@ final class WebViewModel: NSObject, ObservableObject {
     // MARK: - Script messages
 
     fileprivate func handleScriptMessage(_ message: WKScriptMessage) {
-        guard message.name == "sidebarWidth",
-              let width = message.body as? Double,
-              width > 0, width <= 500 else { return }
-        sidebarCSSWidth = width
+        switch message.name {
+        case "sidebarWidth":
+            guard let width = message.body as? Double,
+                  width > 0, width <= 500 else { return }
+            sidebarCSSWidth = width
+        case "usage":
+            #if DEBUG
+            print("[usage] \(message.body)")
+            #endif
+            guard let (model, info) = UsageMonitor.parse(messageBody: message.body) else { return }
+            usageByModel[model] = info
+            // Models the page stops querying (e.g. the startup fallback
+            // probes) age out instead of lingering as stale segments.
+            usageByModel = usageByModel.filter { Date().timeIntervalSince($0.value.fetchedAt) < 600 }
+        default:
+            break
+        }
+    }
+
+    private func pushUsageVisibility() {
+        webView.evaluateJavaScript(
+            "window.__nativeUsageSetVisible && window.__nativeUsageSetVisible(\(isUsagePillVisible));",
+            completionHandler: nil
+        )
     }
 
     // MARK: - Host policy
@@ -263,6 +299,14 @@ private final class ScriptMessageProxy: NSObject, WKScriptMessageHandler {
 // MARK: - WKNavigationDelegate
 
 extension WebViewModel: WKNavigationDelegate {
+
+    // Real page loads reset the injected usage script's polling state;
+    // re-push visibility so it matches the pill. Popups share this delegate,
+    // hence the identity guard.
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        guard webView === self.webView else { return }
+        pushUsageVisibility()
+    }
 
     func webView(
         _ webView: WKWebView,

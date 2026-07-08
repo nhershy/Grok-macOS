@@ -27,6 +27,18 @@ struct ContentView: View {
                     .padding(.bottom, 16)
                     .animation(.easeOut(duration: 0.2), value: zoomControlsLeadingInset)
             }
+            .overlay(alignment: .bottom) {
+                if model.isUsagePillVisible {
+                    // Leading padding equal to the rendered sidebar width
+                    // shifts the pill's center to the content area's center,
+                    // so it sits centered under the page's chat input.
+                    UsagePill(model: model)
+                        .padding(.leading, model.sidebarCSSWidth * CGFloat(model.zoomPercent) / 100)
+                        .padding(.bottom, 6)
+                        .transition(.opacity)
+                        .animation(.easeOut(duration: 0.2), value: model.sidebarCSSWidth)
+                }
+            }
             .navigationTitle("Grok")
     }
 }
