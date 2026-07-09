@@ -4,7 +4,7 @@ An unofficial native macOS app for [grok.com](https://grok.com) — Grok in its 
 
 > **Disclaimer:** This is an unofficial app and is not affiliated with, endorsed by, or connected to xAI. "Grok" is a trademark of xAI. This app simply wraps the grok.com website.
 
-<!-- TODO: add a screenshot: ![Grok for macOS](docs/screenshot.png) -->
+![Grok for macOS](docs/screenshot.png)
 
 ## Install
 
