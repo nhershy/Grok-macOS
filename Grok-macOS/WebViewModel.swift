@@ -41,18 +41,15 @@ final class WebViewModel: NSObject, ObservableObject {
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15"
 
     private static let zoomDefaultsKey = "pageZoom"
-    private static let usagePillDefaultsKey = "usagePillVisible"
 
     @Published var canGoBack = false
     @Published var canGoForward = false
     @Published var zoomPercent = 100
     @Published var sidebarCSSWidth: Double = 248
     @Published var usageByModel: [String: ModelRateLimit] = [:]
-    @Published var isUsagePillVisible = UserDefaults.standard.bool(forKey: WebViewModel.usagePillDefaultsKey) {
-        didSet {
-            UserDefaults.standard.set(isUsagePillVisible, forKey: Self.usagePillDefaultsKey)
-            pushUsageVisibility()
-        }
+    // Deliberately not persisted: the pill starts hidden on every launch.
+    @Published var isUsagePillVisible = false {
+        didSet { pushUsageVisibility() }
     }
 
     let webView: WKWebView
