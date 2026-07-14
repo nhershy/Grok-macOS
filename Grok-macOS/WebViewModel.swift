@@ -118,13 +118,18 @@ final class WebViewModel: NSObject, ObservableObject {
 
         // Grok's SPA rerenders the sidebar, dropping our attribute, so the
         // interval loop re-tags. Matched by visible text / aria-label since
-        // the site's class names are hashed and unstable.
+        // the site's class names are hashed and unstable. Collapsed, the
+        // item is icon-only with no accessible name, so fall back to the
+        // one menu link to "/" that carries a sidebar icon (the logo also
+        // links to "/" but renders its svg directly, without the icon div).
         function tagNewChat(sidebar) {
             if (sidebar.querySelector('[data-native-newchat]')) { return; }
             for (const el of sidebar.querySelectorAll('a, button')) {
                 const text = (el.textContent || '').replace(/\\s+/g, ' ').trim().toLowerCase();
                 const label = (el.getAttribute('aria-label') || '').trim().toLowerCase();
-                if (text === 'new chat' || label === 'new chat') {
+                const title = (el.getAttribute('title') || '').trim().toLowerCase();
+                if (text === 'new chat' || label.startsWith('new chat') || title.startsWith('new chat')
+                    || (el.getAttribute('href') === '/' && el.querySelector('[data-sidebar="icon"]'))) {
                     el.setAttribute('data-native-newchat', '');
                     return;
                 }
