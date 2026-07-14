@@ -11,15 +11,15 @@ import SwiftUI
 @main
 struct Grok_macOSApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-    @StateObject private var model = WebViewModel()
+    @StateObject private var state = BrowserState()
 
     var body: some Scene {
         Window("Grok", id: "main") {
-            ContentView(model: model)
+            ContentView(state: state)
         }
         .defaultSize(width: 1200, height: 800)
         .commands {
-            BrowserCommands(model: model)
+            BrowserCommands(state: state)
         }
     }
 }

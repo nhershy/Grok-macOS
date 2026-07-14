@@ -46,6 +46,7 @@ final class WebViewModel: NSObject, ObservableObject {
     @Published var canGoForward = false
     @Published var zoomPercent = 100
     @Published var sidebarCSSWidth: Double = 248
+    @Published var pageTitle = "Grok"
 
     let webView: WKWebView
 
@@ -168,6 +169,11 @@ final class WebViewModel: NSObject, ObservableObject {
         webView.allowsBackForwardNavigationGestures = true
         webView.allowsMagnification = true
         webView.underPageBackgroundColor = NSColor(white: 0.08, alpha: 1)
+        // WKWebView paints a white backing that peeks out at the bottom and
+        // right edges under fractional pageZoom; disable it so the dark
+        // underPageBackgroundColor shows instead. (Long-standing WebKit KVC
+        // key, in wide production use.)
+        webView.setValue(false, forKey: "drawsBackground")
         #if DEBUG
         webView.isInspectable = true
         #endif
@@ -195,6 +201,12 @@ final class WebViewModel: NSObject, ObservableObject {
             },
             webView.observe(\.canGoForward, options: [.initial, .new]) { [weak self] view, _ in
                 MainActor.assumeIsolated { self?.canGoForward = view.canGoForward }
+            },
+            webView.observe(\.title, options: [.initial, .new]) { [weak self] view, _ in
+                MainActor.assumeIsolated {
+                    let title = view.title?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                    self?.pageTitle = title.isEmpty ? "Grok" : title
+                }
             },
         ]
 
@@ -257,6 +269,9 @@ final class WebViewModel: NSObject, ObservableObject {
         return Self.inAppHosts.contains { host == $0 || host.hasSuffix(".\($0)") }
     }
 }
+
+// Tab identity is the live instance itself (ObjectIdentifier id).
+extension WebViewModel: Identifiable {}
 
 // The user content controller retains its message handlers, and the model
 // retains the webview — this proxy breaks what would otherwise be a cycle.

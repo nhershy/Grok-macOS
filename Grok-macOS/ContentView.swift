@@ -8,6 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var state: BrowserState
+
+    var body: some View {
+        VStack(spacing: 0) {
+            TabBarView(state: state)
+
+            if let pinned = state.pinnedTab {
+                HSplitView {
+                    PaneView(model: state.activeTab)
+                    PaneView(model: pinned)
+                }
+            } else {
+                PaneView(model: state.activeTab)
+            }
+        }
+        .frame(minWidth: 800, minHeight: 600)
+        .background(WindowGrabber())
+        .navigationTitle("Grok")
+    }
+}
+
+private struct PaneView: View {
     @ObservedObject var model: WebViewModel
 
     // The sidebar width is reported live from the page in CSS pixels and
@@ -19,14 +41,12 @@ struct ContentView: View {
 
     var body: some View {
         WebView(model: model)
-            .frame(minWidth: 800, minHeight: 600)
-            .background(WindowGrabber())
+            .frame(minWidth: 320)
             .overlay(alignment: .bottomLeading) {
                 ZoomControls(model: model)
                     .padding(.leading, zoomControlsLeadingInset)
                     .padding(.bottom, 16)
                     .animation(.easeOut(duration: 0.2), value: zoomControlsLeadingInset)
             }
-            .navigationTitle("Grok")
     }
 }
