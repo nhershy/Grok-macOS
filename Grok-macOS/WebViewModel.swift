@@ -64,7 +64,12 @@ final class WebViewModel: NSObject, ObservableObject {
     private static let sidebarWatcherScript = """
     (function () {
         const STYLE_ID = 'native-sidebar-style';
-        const CSS = 'html.native-sidebar-invert [data-native-sidebar] { filter: invert(1) hue-rotate(180deg); }'
+        // Grok paints its dark theme in a viewport-sized container while the
+        // root canvas stays white; any overflow or zoom rounding lets that
+        // white peek out at the right/bottom edges. Pin the root dark
+        // whenever the page renders dark (class toggled below).
+        const CSS = 'html:not(.native-sidebar-invert) { background-color: #0a0a0a !important; }'
+            + ' html.native-sidebar-invert [data-native-sidebar] { filter: invert(1) hue-rotate(180deg); }'
             + ' html.native-sidebar-invert [data-native-sidebar] :is(img, video, canvas) { filter: invert(1) hue-rotate(180deg); }'
             + ' [data-native-newchat] {'
             + '   border-radius: 10px !important;'
