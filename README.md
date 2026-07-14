@@ -15,7 +15,6 @@ An unofficial native macOS app for [grok.com](https://grok.com) — Grok in its 
 ## Features
 
 - **Global hotkey** — press <kbd>⌥ Option</kbd>+<kbd>Space</kbd> anywhere to summon or hide Grok
-- **Usage monitor** — a floating pill showing your remaining rate limits per model, with a refill countdown (<kbd>⇧⌘U</kbd> to toggle)
 - **Zoom controls** — on-screen −/+ buttons plus <kbd>⌘−</kbd> / <kbd>⌘=</kbd> / <kbd>⌘0</kbd>, and your zoom level is remembered
 - **Feels native** — file uploads and downloads use real macOS panels, downloads are revealed in Finder, and camera/mic work for voice mode
 - **Sign-in just works** — including Google sign-in, which normally breaks in embedded web views
@@ -32,7 +31,6 @@ An unofficial native macOS app for [grok.com](https://grok.com) — Grok in its 
 | <kbd>⌘[</kbd> / <kbd>⌘]</kbd> | Back / Forward |
 | <kbd>⇧⌘H</kbd> | Home |
 | <kbd>⌘−</kbd> / <kbd>⌘=</kbd> / <kbd>⌘0</kbd> | Zoom out / in / reset |
-| <kbd>⇧⌘U</kbd> | Toggle usage monitor |
 
 ## Requirements
 

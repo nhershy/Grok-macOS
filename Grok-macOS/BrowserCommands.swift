@@ -43,11 +43,6 @@ struct BrowserCommands: Commands {
 
             Button("Actual Size") { model.zoomReset() }
                 .keyboardShortcut("0", modifiers: .command)
-
-            Divider()
-
-            Toggle("Usage Monitor", isOn: $model.isUsagePillVisible)
-                .keyboardShortcut("u", modifiers: [.command, .shift])
         }
     }
 }
